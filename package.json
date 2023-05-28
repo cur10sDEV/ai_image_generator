@@ -1,0 +1,23 @@
+{
+  "name": "ai_image_generator",
+  "version": "1.0.0",
+  "description": "ai image generator generates images using openai api",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "serve": "nodemon app.js"
+  },
+  "keywords": [
+    "ai",
+    "openai",
+    "image"
+  ],
+  "author": "cur10sDEV",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "openai": "^3.2.1"
+  }
+}
