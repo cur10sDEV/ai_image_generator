@@ -24,7 +24,6 @@ const App = () => {
     const api_uri =
       import.meta.env.VITE_API_URI ||
       "http://localhost:3000/v1/openai/generateImage";
-    console.log(api_uri);
     setIsLoading(true);
     setTimeout(() => setIsLoading(false), 10000);
     e.preventDefault();
