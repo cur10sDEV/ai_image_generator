@@ -9,15 +9,10 @@ const imageRouter = require("./routes/imgGenRoutes");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "client", "dist")));
 app.use(cors());
 
 //routes
 app.use("/v1/openai", imageRouter);
-
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
-});
 
 app.use("*", (req, res) => {
   res.status(404).json({

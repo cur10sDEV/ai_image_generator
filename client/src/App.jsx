@@ -21,19 +21,20 @@ const App = () => {
   };
 
   const requestImage = async (e) => {
+    const api_uri =
+      import.meta.env.VITE_API_URI ||
+      "http://localhost:3000/v1/openai/generateImage";
+    console.log(api_uri);
     setIsLoading(true);
     setTimeout(() => setIsLoading(false), 10000);
     e.preventDefault();
-    const response = await fetch(
-      "http://localhost:3000/v1/openai/generateImage",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userInput),
-      }
-    );
+    const response = await fetch(api_uri, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userInput),
+    });
     const data = await response.json();
     setImgData(data);
     setIsLoading(false);
