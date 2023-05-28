@@ -2,22 +2,28 @@ const createImage = require("../utils/openai");
 
 const generateImage = async (req, res) => {
   try {
-    const { prompt, size } = req.body;
-    console.log(req.body);
+    const { prompt, size, noOfImages } = req.body;
+    if (prompt === "") {
+      return res.status(200).json({
+        success: false,
+        data: [],
+        error: "Please provide a valid input",
+      });
+    }
     const imgSize =
       size === "small"
         ? "256x256"
         : size === "medium"
         ? "512x512"
         : "1024x1024";
-    const response = await createImage(prompt, imgSize);
-    const imgUrl = response.data.data[0].url;
+    const response = await createImage(prompt, imgSize, noOfImages);
+    const data = response.data.data;
     res.status(200).json({
       success: true,
-      data: imgUrl,
+      data: data,
       error: "",
     });
-  } catch (err) {
+  } catch (error) {
     if (error.response) {
       console.log(error.response.status);
       console.log(error.response.data);
@@ -26,8 +32,11 @@ const generateImage = async (req, res) => {
     }
     res.status(400).json({
       success: false,
-      data: "",
-      error: "The image could not be generated",
+      data: [],
+      error:
+        error.response?.status === 429
+          ? "Rate limit exceeded, Please try again after some time"
+          : "The image could not be generated",
     });
   }
 };
